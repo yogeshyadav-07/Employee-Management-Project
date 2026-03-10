@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Welcome, {{ username }}!</h2>
+
+<div style="display: flex; gap: 20px; flex-wrap: wrap; margin-top: 20px;">
+    
+    <div style="background: white; padding: 20px; width: 200px; text-align: center; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+        <h3>Total Staff</h3>
+        <h1 style="color: #2c3e50; font-size: 40px; margin: 0;">{{ total }}</h1>
+    </div>
+
+    <div style="background: white; padding: 20px; width: 200px; text-align: center; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+        <h3>Present Today</h3>
+        <h1 style="color: #28a745; font-size: 40px; margin: 0;">{{ present_today }}</h1>
+    </div>
+
+    <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+        {% if plot_url %}
+            <img src="data:image/png;base64,{{ plot_url }}" style="height: 200px;">
+        {% else %}
+            <p>No Data for Graph</p>
+        {% endif %}
+    </div>
+
+</div>
+{% endblock %}

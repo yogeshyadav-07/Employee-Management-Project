@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center;">
+    <h2>Employee Directory</h2>
+    <div>
+        <a href="/export_csv" style="background: #007bff; color: white; padding: 8px 15px; text-decoration: none; border-radius: 4px; margin-right: 10px;">⬇ Export CSV</a>
+        <a href="/add"><button style="background: #28a745; color: white; padding: 8px 15px; border: none; cursor: pointer;">+ Add New</button></a>
+    </div>
+</div>
+
+<div style="margin: 20px 0;">
+    <form method="get">
+        <input type="text" name="search" placeholder="Search name..." value="{{ request.args.get('search', '') }}" style="padding: 8px;">
+        <button type="submit">Search</button>
+    </form>
+</div>
+
+<table>
+    <tr>
+        <th>Photo</th>
+        <th>Name / Email</th>
+        <th>Department</th>
+        <th>Joined</th>
+        <th>Action</th>
+    </tr>
+    {% for emp in employees %}
+    <tr>
+        <td style="text-align: center;">
+            {% if emp.profile_pic %}
+                <img src="{{ url_for('static', filename='uploads/' + emp.profile_pic) }}" width="50" height="50" style="border-radius: 50%; object-fit: cover;">
+            {% else %}
+                <div style="width: 50px; height: 50px; background: #ddd; border-radius: 50%; line-height: 50px; text-align: center;">No Pic</div>
+            {% endif %}
+        </td>
+        <td>
+            <strong>{{ emp.name }}</strong><br>
+            <span style="font-size: 12px; color: gray;">{{ emp.email }}</span>
+        </td>
+        <td>{{ emp.department }}</td>
+        <td>{{ emp.date_of_joining }}</td>
+        <td>
+            <a href="/mark_attendance/{{ emp.id }}" style="background: #17a2b8; color: white; padding: 5px 10px; font-size: 12px; border-radius: 3px; text-decoration: none;">Mark Present</a>
+        </td>
+    </tr>
+    {% else %}
+    <tr><td colspan="5">No employees found.</td></tr>
+    {% endfor %}
+</table>
+{% endblock %}

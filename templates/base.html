@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee System</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f4f4f9; }
+        .navbar { background: #333; overflow: hidden; padding: 10px 20px; }
+        .navbar a { float: left; color: white; text-align: center; padding: 14px 16px; text-decoration: none; }
+        .navbar a:hover { background: #ddd; color: black; }
+        .container { padding: 20px; }
+        .alert { padding: 10px; margin-bottom: 15px; border-radius: 5px; color: white; }
+        .alert.success { background-color: #4CAF50; }
+        .alert.error { background-color: #f44336; }
+        table { width: 100%; border-collapse: collapse; background: white; }
+        th, td { padding: 10px; border: 1px solid #ddd; text-align: left; }
+        th { background: #333; color: white; }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="#" style="font-weight: bold;">EMS Portal</a>
+        {% if session.get('user') %}
+            <a href="/dashboard">Dashboard</a>
+            <a href="/employees">All Employees</a>
+            <a href="/add">Add New</a>
+            <a href="/logout" style="float: right; background: #d9534f;">Logout</a>
+        {% endif %}
+    </div>
+
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
